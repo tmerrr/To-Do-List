@@ -47,7 +47,7 @@ class Todo
 				sort_recent
 			elsif @sort == 'old'
 				sort_oldest
-			elsif (@sort == 'alpha') || (@sort == 'rev alplha')
+			else
 				@add_sort = true
 				sort_alpha
 			end
@@ -58,20 +58,11 @@ class Todo
 		temp_arr = @arr.clone
 		sorted = []
 		first_index = 0
-		length = temp_arr.length
-		first = temp_arr[first_index]
-		last = temp_arr.last
-		last_index = length - 1
 
-		while true
-			length = temp_arr.length
-			if length <= 0
-				@sorted_array = sorted
-				break
-			end
+		while temp_arr.length > 0
 			first = temp_arr[first_index]
 			last = temp_arr.last
-			last_index = length - 1
+			last_index = temp_arr.length - 1
 			if first_index == last_index
 				sorted.push temp_arr.pop
 				first_index = 0
@@ -80,17 +71,17 @@ class Todo
 				temp_arr.delete_at(first_index)
 				first_index = 0
 			else
-				first_index = first_index + 1
+				first_index += 1
 			end
 		end
-
+		@sorted_array = sorted
 		if @add_sort == true
 			if @sort == 'rev alpha'
-				@sorted_array = @sorted_array.reverse
+				@sorted_array.reverse!
 			end
 		else
 			if @sort == 'alpha'
-				@sorted_array = @sorted_array.reverse
+				@sorted_array.reverse!
 				@sort = 'rev alpha'
 			else
 				@sort = 'alpha'
